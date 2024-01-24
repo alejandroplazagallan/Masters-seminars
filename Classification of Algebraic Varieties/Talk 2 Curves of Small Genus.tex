@@ -1,0 +1,298 @@
+\documentclass[12pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+\usepackage[left=2cm,top=2.5cm,right=1.5cm,bottom=2.5cm]{geometry}
+\setlength{\parindent}{0pt}
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{remark}{Remark}
+\newtheorem*{fact}{Fact}
+\newtheorem*{example}{Example}
+
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\chara}{char}
+
+\title{\Huge{Seminar in Classification of Algebraic Varieties}\\\vspace{5mm}\Large{Talk 2: Curves of Small Genus}}
+\author{Alejandro Plaza Gall\'{a}n}
+\date{13 November 2023}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+
+In the following, $X$ will always denote a curve, this is, a smooth and projective scheme of dimension 1, irreducible $X\rightarrow\Spec k$ of finite type over an algebraically closed field $k$. We will denote by $g$ the genus of $X$ and $K$ a canonical divisor of $X$.
+
+\begin{theorem}
+\textbf{\emph{(Riemann-Roch)}} Let $D$ be a divisor on $X$. Then
+\[\dim|D|-\dim|K-D|=\deg D+1-g.\]
+\end{theorem}
+
+\begin{definition}
+A divisor $D$ on $X$ is said to be \textbf{special} if $\dim|K-D|\geq0$. It is thus called \textbf{non-special} if $\dim|K-D|=-1$.
+\end{definition}
+
+\begin{remark}
+If $\deg D<0$, then $|D|=\emptyset$, so $\dim|D|=-1$.
+
+If $\deg D>\deg K$, then $D$ is non-special.
+\end{remark}
+
+\begin{corollary}
+Let $D$ be a non-special divisor on $X$. Then
+\[\dim|D|=\deg D-g.\]
+\end{corollary}
+
+\begin{theorem}
+\emph{\textbf{(Clifford)}} Let $D$ be an effective special divisor on the curve $X$. Then
+\[\dim|D|\leq\frac{1}{2}\deg D.\]
+\end{theorem}
+
+\begin{remark}
+If $\mathfrak{d}$ is a base point free linear system of dimension $r$ and degree $d$, it defines a morphism
+\[X\longrightarrow\mathbb{P}_k^r\]
+of degree $d$. This is unique up to an automorphism of $\mathbb{P}_k^r$.
+
+If $D$ is a very ample divisor and $|D|$ is base point free, then the morphism it defines is an immersion and, since $X$ is proper, it is indeed a closed immersion.
+\end{remark}
+
+\begin{proposition}
+Let $X$ be a curve and $D$ a divisor on $X$.
+
+\begin{enumerate}[label=\alph*)]
+\item The complete linear system $|D|$ has no base points if and only if $\forall P\in X$ closed point,
+\[\dim|D-P|=\dim|D|-1.\]
+
+\item $D$ is very ample if and only if $\forall P,Q\in X$ closed points ($P=Q$ allowed),
+\[\dim|D-P-Q|=\dim|D|-2.\]
+\end{enumerate}
+\end{proposition}
+
+\section{Canonical embedding}
+
+\begin{proposition}
+If $g\geq2$, then $\forall n\geq1$ $|nK|$ has no base points.
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}[label=\alph*)]
+\item First, let's prove the case $n=1$. Remember that $\dim|K|=g-1$. Let $P\in X$ closed. By Riemann-Roch,
+\[\dim|K-P|=\dim|P|-\deg P-1+g=g-2+\dim|P|=\dim|K|-1+\dim|P|.\]
+
+Since $P\in|P|$, $|P|\neq\emptyset$, so $\dim|P|\geq0$. We want to see that $\dim|P|=0$.
+
+Assume $\dim|P|>0$. That means $\exists Q\in|P|$ with $P\neq Q$. Then it has no base points, because
+\[\supp P\cap\supp Q=\{P\}\cap\{Q\}=\emptyset,\]
+so no point can be in the support of all divisors of $|P|$. Hence, $|P|$ defines a morphism
+\[|P|:X\longrightarrow\mathbb{P}_k^1\]
+of degree $1$, which is absurd because $X$ is not rational, as $g>0$.
+
+Thus, $\dim|P|=0$, leading to
+\[\dim|K-P|=\dim|K|-1.\]
+
+From this result and the previous proposition, it follows that $|K|$ has no base points.
+
+\item Let $n\geq2$. Since $g\geq2$, we have
+\[\deg K=2g-2\geq2,\]
+so we get
+\[2\deg K\geq\deg K+2,\]
+and hence
+\[\deg nK=n\deg K\geq2\deg K\geq\deg K+2.\]
+
+Now, for all $P\in X$ closed,
+\[\deg(nK-P)=\deg nK-1>\deg K.\]
+
+By Riemann-Roch,
+\[\dim|nK-P|=\deg(nK-P)-g=\deg nK-g-1=\dim|nK|-1.\]
+
+Thus, $|nK|$ has no base points.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+For $g\geq2$ and $n\geq1$, the base-free linear system $|nK|$ defines a morphism
+\[\phi_n:X\longrightarrow\mathbb{P}_k^N\]
+of degree $n(2g-2)$ called the $\boldsymbol{n}$\textbf{-th pluricanonical map}, where
+\[N=\dim|nK|=\left\{\begin{array}{ll}g-1,&n=1;\\(2n-1)g-2n,&n\geq2.\end{array}\right.\]
+\end{definition}
+
+\begin{definition}
+A curve $X$ of genus $g\geq2$ is said to be \textbf{hyperelliptic} if there exists a finite morphism $X\rightarrow\mathbb{P}_k^1$ of degree $2$.
+\end{definition}
+
+This definition is equivalent to the curve having a linear system of dimension $1$ and degree $2$.
+
+\begin{proposition}
+If $g\geq2$, then $|K|$ is very ample if and only if $X$ is not hyperelliptic.
+\end{proposition}
+
+\begin{proof}
+By the criterion for very ample, $|K|$ will be very ample if and only if $\forall P,Q\in X$ closed,
+\[\dim|K-P-Q|=\dim|K|-2.\]
+
+Applying Riemann-Roch,
+\[\dim|K-P-Q|=\dim|P+Q|-\deg(P+Q)-1+g=\dim|P+Q|-3+g.\]
+
+Hence, we get the equivalences
+\[|K|\text{ is very ample}\Longleftrightarrow\forall P,Q\in X\ \dim|K-P-Q|=g-3\Longleftrightarrow\forall P,Q\in X\ \dim|P+Q|=0.\]
+
+Let's now prove the double implication of the statement of the proposition.
+
+\begin{itemize}
+\item $\Rightarrow)$ Assume $X$ is hyperelliptic. Then there is a linear system $\mathfrak{d}$ of dimension $1$ and degree $2$. Observe that all divisors in $\mathfrak{d}$ are effective of degree $2$, i.e., of the form $P+Q$ for $P,Q\in X$. Since $\dim\mathfrak{d}>0$, $\exists P+Q\in\mathfrak{d}$. Then, $\mathfrak{d}\subseteq|P+Q|$, so $\dim|P+Q|\geq\dim\mathfrak{d}=1>0$.
+
+\item $\Leftarrow)$ Assume that $\exists P,Q\in X$ closed with $\dim|P+Q|\neq0$. Since $P+Q\in|P+Q|\neq\emptyset$, then $\dim|P+Q|\geq1$. Hence, $|P+Q|$ contains a linear divisor $\mathfrak{d}$ of dimension $1$ and degree $\deg\mathfrak{d}=\deg(P+Q)=2$. Thus, $X$ is hyperelliptic.
+\end{itemize}
+\end{proof}
+
+\begin{definition}
+For a non-hyperelliptic curve $X$ of genus $g\geq3$, the closed immersion defined by a canonical divisor
+\[|K|:X\lhook\joinrel\longrightarrow\mathbb{P}_k^{g-1}\]
+is called the \textbf{canonical embedding}. It is unique up to an automorphism of $\mathbb{P}_k^{g-1}$. Its image, which is a curve of degree $2g-2$, is a \textbf{canonical curve}.
+\end{definition}
+
+\begin{example}
+\begin{itemize}
+\item If $X$ is a non-hyperelliptic curve of genus $g=3$, then its canonical embedding $|K|:X\rightarrow\mathbb{P}_k^2$ has degree $4$. This means that it embeds the curve $X$ into $\mathbb{P}_k^2$ as a quartic curve.
+
+\item If $X$ is a non-hyperelliptic curve of genus $g=4$, then its canonical embedding $|K|:X\rightarrow\mathbb{P}_k^3$ has degree $6$. This means that it embeds the curve $X$ into $\mathbb{P}_k^3$ as a sextic curve.
+\end{itemize}
+\end{example}
+
+\section{Classification of curves of small genus}
+We want to study the set $\mathfrak{M}_g$ of all curves of genus $g$ up to isomorphism. One first step to do this is to divide the curves to be classified according to whether they admit linear systems $g_d^r$ of certain dimension $r$ and degree $d$. For example, if they admit $g_2^1$, they are hyperelliptic and can be classified apart more easily.
+
+\begin{definition}
+A curve $X$ is called \textbf{trigonal} if it admits a $g_3^1$.
+\end{definition}
+
+\begin{proposition}
+A curve of genus $g$ has a $g_d^1$ for any $d\geq\frac{1}{2}g+1$.
+
+For $d<\frac{1}{2}g+1$, there exist curves of genus $g$ with no $g_d^1$.
+\end{proposition}
+
+In particular, for every genus $g\geq3$, there exist non-hyperelliptic curves.
+
+Curves of genus $g\leq4$ are always trigonal, but for genus $g\geq5$ there exist non-trigonal curves.
+\subsection{Genus 3}
+
+The canonical embedding of a curve of genus $3$ is a non-singular plane quartic curve. Conversely, every non-singular plane quartic curve has genus $3$. Hence, the problem reduces to find all the non-singular quartic curves in $\mathbb{P}_k^2$. These are defined by homogeneous polynomials of degree $4$.
+
+\begin{proposition}
+$k[x_0,\ldots,x_r]_d=\{f\in k[x_0,\ldots,x_r]\,|\,f\text{ homogeneous},\deg f=d\}$ is a $k$-vector space of base $\{x_0^{n_0}\cdots x_r^{n_r}\,|\,n_0+\cdots+n_r=d\}$. Moreover,
+\[\dim k[x_0,\ldots,x_r]_d=\binom{r+d}{d}.\]
+\end{proposition}
+
+\begin{proof}
+(Sketch) $\{x_0^{n_0}\cdots x_r^{n_r}\,|\,n_0+\cdots+n_r=d\}$ is base of $k[x_0,\ldots,x_r]_d$ by construction of homogeneous polynomials. A typical exercise in combinatorics shows that
+\[\#\{x_0^{n_0}\cdots x_r^{n_r}\,|\,n_0+\cdots+n_r=d\}=\#\{(n_0,\ldots,n_r)\in\mathbb{N}_0^{r+1}\,|\,n_0+\cdots+n_r=d\}=\binom{r+d}{r}.\]
+\end{proof}
+
+In the case $r=2$, $d=4$ we get that homogeneous polynomials of degree $4$ in $3$ variables are determined by $\binom{6}{2}=15$ coefficients. Hence,
+\[\{P\in\mathbb{A}_k^{15}\,|\,P\text{ closed}\}\longleftrightarrow k[x_0,x_1,x_2]_4.\]
+
+Now, two curves $X,Y\subseteq\mathbb{P}_k^2$ are the same if and only if the defining polynomials $f,g$ satisfy $f=\lambda g$ for some $\lambda\in k$, so
+\[\{P\in\mathbb{P}_k^{14}\,|\,P\text{ closed}\}=\{P\in\mathbb{A}_k^{15}\setminus\{0\}\,|\,P\text{ closed}\}\big/k^{\times}\longleftrightarrow\{X\subseteq\mathbb{P}_k^2\,|\,X\text{ quartic curve}\}.\]
+
+Now, non-singular quartic curves form an open variety $U\subseteq\mathbb{P}_k^{14}$ and the dimension remains unchanged: $\dim U=14$.
+
+In our variety of moduli we are considering the isomorphism classes of curves, so $\mathfrak{M}_3^{\text{non-hyp}}=U/\cong$.
+
+\begin{fact}
+All curves $X,Y\subseteq\mathbb{P}_k^2$ are canonical curves, any isomorphism $X\xrightarrow\cong Y$ can be uniquely extended to an automorphism of $\mathbb{P}_k^2$.
+\end{fact}
+
+Hence,
+\[\mathfrak{M}_3^{\text{non-hyp}}=U/\PGL_k(2),\]
+where $\PGL_k(2)=\Aut\mathbb{P}_k^2$ is the projective linear group. This group can be represented by the matrices $\PGL_k(n)\cong\GL_{n+1}(k)/k^{\times}$, so $\dim\PGL_k(2)=(2+1)^{2}-1=8$.
+
+Exercise IV.5.2 from Hartshorne states that if $X$ is a curve of genus $g\geq2$ over a field $k$ with $\chara k=0$, then the group $\Aut X$ is finite. Hence, $\dim\Aut X=0$, so
+\[\dim\mathfrak{M}_3^{\text{non-hyp}}=\dim U-\dim\PGL_k(2)=14-8=6.\]
+
+\subsection{Genus 4}
+\begin{fact}
+Sextic curves in $\mathbb{P}_k^3$ are complete intersections between a unique quadric surface $Q\subseteq\mathbb{P}_k^3$ and a cubic surface $F$.
+
+Conversely, the complete intersection of a quadric surface and a cubic surface is a sextic curve.
+
+$X$ has exactly one $g_3^1$ if and only if $Q$ is singular. In that case, $Q$ is a quadric cone.
+\end{fact}
+
+Complete intersection means that the ideal sheaf of the curve is the sum of the ideal sheaves of the surfaces.
+
+The canonical embedding of a non-hyperelliptic curve of genus $4$ is a sextic curve in $\mathbb{P}_k^3$, so we just need to classify sextics of $\mathbb P_k^3$.
+\[\{P\in\mathbb{P}_k^9\,|\,P\text{ closed}\}\longleftrightarrow \big(k[x_0,x_1,x_2,x_3]_2\setminus\{0\}\big)\big/k^{\times}\longleftrightarrow\{Q\subseteq\mathbb{P}_k^3\,|\,Q\text{ quadric surface}\}.\]
+
+Now, the set of non-singular sextic curves in $\mathbb{P}_k^3$ can be described as a projective bundle $E$ over the space of quadric surfaces $\mathbb P_k^9$. Considering the projection map $\pi:E\rightarrow\mathbb{P}_k^9$, the fibre $E_Q$ of a quadric $Q\in\mathbb{P}_k^9$ is the set of all curves obtained by intersecting $Q$ with cubic surfaces and $H^0(\mathbb{P}_k^3,\mathcal{O}_Q(3))$ is the space of homogeneous cubic polynomials over $Q$, i.e., the $E_Q=\mathbb{P}(H^0(\mathbb{P}_k^3,\mathcal{O}_Q(3)))$.
+
+Let $Q\subseteq\mathbb{P}_k^3$ be a quadric surface. Twisting by $3$ the exact sequence of the closed subscheme, we get
+\[0\longrightarrow\mathcal{L}(-Q)=\mathcal{O}_{\mathbb{P}_k^3}(-2)\longrightarrow\mathcal{O}_{\mathbb{P}_k^3}\longrightarrow\mathcal{O}_Q\longrightarrow0,\]
+\[0\longrightarrow H^0\big(\mathbb{P}_k^3,\mathcal{O}_{\mathbb{P}_k^3}(1)\big)\longrightarrow H^0\big(\mathbb{P}_k^3,\mathcal{O}_{\mathbb{P}_k^3}(3)\big)\longrightarrow H^0\big(\mathbb{P}_k^3,\mathcal{O}_Q(3)\big)\longrightarrow0.\]
+\[\dim E_Q=h^0\big(\mathbb{P}_k^3,\mathcal{O}_Q(3)\big)-1=h^0\big(\mathbb{P}_k^3,\mathcal{O}_{\mathbb{P}_k^3}(3)\big)-h^0\big(\mathbb{P}_k^3,\mathcal{O}_{\mathbb{P}_k^3}(1)\big)-1=\binom{6}{3}-\binom{4}{3}-1=15.\]
+
+Thus, the dimension of the projective bundle that parametrises the sextic curves in $\mathbb{P}_k^3$ is
+\[\dim E=\dim\mathbb{P}_k^9+\dim E_Q=9+15=24.\]
+\[\mathfrak{M}_4^{\text{non-hyp}}=E/\PGL_k(3),\]
+\[\dim\mathfrak{M}_4^{\text{non-hyp}}=\dim E/\PGL_k(3)=\dim E-\dim\PGL_k(3)=24-(4^2-1)=24-15=9.\]
+
+Now, let's study the curves of genus $4$ that only have one $g_3^1$. Recall that these curves are characterised by their associated quadric surface $Q$ being a cone. Now, all quadric cones -- up to isomorphism -- can be defined by a homogeneous polynomial of degree $2$ with the term $x_3^2$ missing, so we are left with $9$ coefficients. Hence, the variety that parametrises them is $\mathbb{P}_k^8$.
+
+Repeating all the process, the projective bundle $F$ of sextic curves in $\mathbb{P}_k^3$ with one $g_3^1$ over the quadric cones $\mathbb{P}_k^8$ also has fibres of degree $15$, so we get a moduli variety $F/\PGL_k(3)$ of dimension $8$.
+
+\subsection{Genus 5}
+
+Let $X$ be a non-hyperelliptic curve of genus $5$.
+
+\begin{fact}
+$X$ does not have a $g_3^1$ if and only if its canonical embedding in $\mathbb{P}_k^4$ is the complete intersection of three quadric hypersurfaces.
+\end{fact}
+
+The curves of genus $5$ that don't admit a $g_3^1$ are the complete intersection of three quadric hypersurfaces, and these can be shown to form a moduli variety of dimension $12$.
+
+Let's now explicitly classify the trigonal curves.
+
+\begin{proposition}
+$X$ has a $g_3^1$ if and only if it can be represented as a plane quintic with one node.
+\end{proposition}
+
+\begin{proof}
+\begin{itemize}
+\item $\Rightarrow)$ Let $D$ be a $g_3^1$. By Riemann-Roch,
+\[\dim|K-D|=\dim|D|-\deg D+g-1=1-3+5-1=2.\]
+
+Hence, we have a map $|K-D|:X\rightarrow\mathbb{P}_k^2$ of degree $5$. Its image is a plane curve, so we can use the formula for the genus:
+\[5=g=\frac{1}{2}(d-1)(d-2)-n=6-n,\]
+where $n$ is the number of nodes. This gives $n=1$.
+
+\item $\Leftarrow)$ Let $f:X\rightarrow\mathbb{P}_k^2$ be a plane quintic curve. Let $D=f^*H$, where $H\subseteq\mathbb{P}_k^2$ is a hyperplane. Then,
+\[\deg D=\deg f\cdot\deg H=5.\]
+
+\[\dim|D|=\dim|f^*H|\geq\dim|H|=h^0\big(\mathbb{P}_k^2,\mathcal{O}_{\mathbb{P}_k^2}(1)\big)-1=\binom{3}{1}-1=2.\]
+
+By Riemann-Roch,
+\[\dim|K-D|=\dim|D|-\deg D+g-1=\dim|D|-1\geq1>0.\]
+
+Hence, $K-D$ is a special divisor. We apply Clifford theorem:
+\[2\leq\dim|D|\leq\frac{1}{2}\deg D=\frac{5}{2},\]
+so $\dim|D|=2$ and therefore, $\dim|K-D|=1$ and $\deg(K-D)=8-5=3$. Thus, $K-D$ is the $g_3^1$ we were looking for.
+\end{itemize}
+\end{proof}
+
+Now the problem of classifying non-hyperelliptic trigonal curves of genus $5$ has turned into classifying quintic plane curves with one node. These are defined by a homogeneous polynomial of degree $5$, but -- as in the case of quadric cones -- one of the terms is missing, so there are $\binom{7}{2}-1=20$ coefficients, so these curves are parametrised by $\mathbb{P}_k^{19}$. Now the classes of equivalence of these curves are represented by $\mathbb{P}_k^{19}/\PGL_k(2)$, which is a variety of dimension $19-8=11$.
+\end{document}
